@@ -3,16 +3,22 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { connect } from 'react-redux';
 import upVote from './actions/up-vote';
+import addSong from './actions/add-song';
 import store from './store/index';
 
 const App = () => {
 	
 	return (
-		<VisibleSongTable />
+
+		<div>
+			<SongTable />
+
+			<AddSong />
+		</div>
 	);
 };
 
-const SongTable = ({ 
+let SongTable = ({ 
 	songs,
 	onSongClick
  }) => {
@@ -76,11 +82,32 @@ const mapDispatchToSongTableProps = (
 		}
 	};
 };
-
-const VisibleSongTable = connect(
+SongTable = connect(
 	mapStateToSongTableProps,
 	mapDispatchToSongTableProps
 )(SongTable);
+
+let AddSong = ({ dispatch }) => {
+	let input;
+
+	return(
+		<div>
+			<input ref={node => {
+				input = node;
+			}} />
+			<button onClick={() => {
+				dispatch(
+					addSong(input.value)
+				);
+
+				input.value = '';
+			}}>
+			Add Song
+			</button>
+		</div>
+	);
+};
+AddSong = connect()(AddSong);
 
 ReactDOM.render(<Provider store = {store}>
 					<App />
