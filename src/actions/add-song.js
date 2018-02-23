@@ -1,9 +1,9 @@
-let nextSongId = 0;
+import { v4 } from 'node-uuid';
 
 const addSong = (title) => {
 	return {
 		type: 'ADD_SONG',
-		id: nextSongId++,
+		id: v4(),
 		title
 	};
 };

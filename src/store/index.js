@@ -1,5 +1,7 @@
-import {createStore} from 'redux';
-import songs from '../reducers/song-reducer';
+import { createStore } from 'redux';
+import songApp from '../reducers/song-reducer';
+import { loadState, saveState } from './local-storage';
+import _throttle from 'lodash/throttle';
 
 // const data = 
 // [
@@ -20,7 +22,20 @@ import songs from '../reducers/song-reducer';
 // 	}
 // ];
 
-const store = createStore(songs);
+const persistedState = loadState();
+
+const store = createStore(
+	songApp,
+	persistedState
+);
+
+store.subscribe(_throttle(() => {
+	saveState(
+		store.getState()
+	);
+}, 1000));
+
+
 console.log("Store: ")
 console.log(store.getState());
 
