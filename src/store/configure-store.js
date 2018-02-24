@@ -22,21 +22,22 @@ import _throttle from 'lodash/throttle';
 // 	}
 // ];
 
-const persistedState = loadState();
 
-const store = createStore(
-	songApp,
-	persistedState
-);
+const configureStore = () => {
+	const persistedState = loadState();
 
-store.subscribe(_throttle(() => {
-	saveState(
-		store.getState()
+	const store = createStore(
+		songApp,
+		persistedState
 	);
-}, 1000));
 
+	store.subscribe(_throttle(() => {
+		saveState(
+			store.getState()
+		);
+	}, 1000));
 
-console.log("Store: ")
-console.log(store.getState());
+	return store;
+};
 
-export default store;
+export default configureStore;

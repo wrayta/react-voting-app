@@ -1,18 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import upVote from '../actions/up-vote';
-import store from '../store/index';
+import store from '../store/configure-store';
 
 let SongTable = ({ 
 	songs,
 	onSongClick
  }) => {
-
-	console.log("Songs: ");
-	console.log(songs);
-
-	console.log("Store: ");
-	console.log(store.getState());
 
 	let rows = [];
 
@@ -52,7 +46,7 @@ const mapStateToSongTableProps = (
 	state
 ) => {
 	return {
-		songs: store.getState()
+		songs: state
 	};
 };
 
